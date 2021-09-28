@@ -1,4 +1,35 @@
-# Containerisation with Docker
+# Microservices Architecture
+![](img/microservicesarchitecturediagram.png)
+
+![](img/clientdockerhostregistry.svg)
+
+- [Microservices Architecture](#microservices-architecture)
+  - [What is containerisation](#what-is-containerisation)
+- [Docker](#docker)
+  - [What is Docker?](#what-is-docker)
+- [Benefits](#benefits)
+  - [Docker Installation](#docker-installation)
+    - [Requirements](#requirements)
+    - [Installation](#installation)
+    - [To Check Installation](#to-check-installation)
+    - [Create an account](#create-an-account)
+
+## What is containerisation
+- Packaging services together in a container
+# Docker
+## What is Docker?
+- Open source
+- PaaS (platform as a service)
+- Containerisation platform
+
+# Benefits
+- Faster than VMs
+- Light-weight
+- User-friendly
+- Isolates 
+- Uses fewer resources
+
+
 ## Docker Installation
 https://docs.docker.com/desktop/windows/install/
 
