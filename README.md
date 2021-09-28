@@ -17,6 +17,7 @@
 ## What is containerisation
 - Packaging services together in a container
 # Docker
+![](img/dockericon.png)
 ## What is Docker?
 - Open source
 - PaaS (platform as a service)
