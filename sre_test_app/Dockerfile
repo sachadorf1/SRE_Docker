@@ -3,7 +3,6 @@
 # Choose the image
 FROM nginx
 
-# Optional - says who made this
 LABEL MAINTAINER=SDorf@spartaglobal.com
 # Create a container
 

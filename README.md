@@ -21,6 +21,8 @@
     - [Let's move onto nginx](#lets-move-onto-nginx)
   - [Dockerfile](#dockerfile)
     - [Let's create a Micro-service for our Node-App with Docker](#lets-create-a-micro-service-for-our-node-app-with-docker)
+  - [Docker Volume](#docker-volume)
+  - [Mongodb](#mongodb)
 
 ## What is containerisation
 - Packaging services together in a container
@@ -183,6 +185,8 @@ EXPOSE 80
 # CMD TO LAUNCH THE NGINX WEB SERVER
 CMD ["nginx", "-g", "daemon off;"]
 ```
+`docker history name_of_image`
+
 
 - `docker build -t sachadorf/sre_nginx_test:v1 .`
 - `docker run -d -p 80:80 sachadorf/sre_nginx_test:v1`
@@ -201,3 +205,74 @@ CMD ["nginx", "-g", "daemon off;"]
 - type localhost into your browser and you should see this page:
 
 ![](img/sparttestapplogo.png)
+
+## Docker Volume
+- Creating a volume `docker volume create name`
+- Deleting the volume `docker volume rm name`
+- Check existing volumes `docker volume ls`
+- `docker inspect volume_name`
+
+
+`docker volume ls`
+`docker volume create sre_sacha_volume`
+`docker volume ls`
+`docker inspect sre_sacha_volume`
+
+https://docs.tibco.com/pub/mash-local/4.3.0/doc/html/docker/GUID-BD850566-5B79-4915-987E-430FC38DAAE4.html
+- Commands to delete all containers, all volumes
+
+Need to minimise the size without compromising on quality
+
+`docker run -d -p 3000:3000 sachadorf/sre_node_app:v1`
+`docker ps`
+`docker rm container_id -f`
+
+- Run `docker images` and note the size of your node app image
+
+![](img/dockerimagescmd_big.jpg)
+
+In Dockerfile in app:
+```
+FROM node AS app
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install -g npm@latest
+RUN npm install express
+
+# RUN seeds/seed.js
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["node", "app.js"]
+# ###
+# Let's build a multi-stage production ready image
+FROM node:alpine
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install -g npm@latest
+RUN npm install express
+
+# This line of code does the magic here to compress the images
+COPY --from=app /usr/src/app /usr/src/app/
+
+EXPOSE 3000
+
+CMD ["node", "app.js"]
+```
+- Run this command to build a new image that will be a smaller size
+`docker build -t sachadorf/sre_prod_build:v1 .`
+
+- Run `docker images` again and note the size of the new image you created
+
+![](img/dockerimagescmd_small.jpg)
+
+## Mongodb
+`docker pull mongo`
